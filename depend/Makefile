@@ -50,7 +50,7 @@ $(NAME): $(OBJS)
 
 clean:
 	@rm -v $(OBJS)
-	@rm -vrf $(DEPDIR)
+	@rm -v .depend
 
 # counts "real" lines of code
 count:
