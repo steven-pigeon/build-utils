@@ -5,7 +5,7 @@ Various tools to make building easier.
 
 * Depynd is a more robust (but still flaky) Python version. It deals recursively with in-project dependencies, ignores system includes and absolute paths.
 
-To use either, copy the script in the same directory as your <Makefile> and add it the rule:
+To use either, copy the script in the same directory as your `Makefile` and add it the rule:
 
 ```
 depend:
