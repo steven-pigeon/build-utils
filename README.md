@@ -18,4 +18,4 @@ and
 -include .depend
 ```
 
-somewhere in the Makefile. It will load the rules contained in <.depend> and make will do the rest.
+somewhere in the Makefile. It will load the rules contained in `.depend` and make will do the rest.
