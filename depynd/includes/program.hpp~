@@ -1,0 +1,8 @@
+#ifndef __MODULE_PROGRAM__
+#define __MODULE_PROGRAM__
+
+#include <processor.hpp>
+#include <instruction.hpp>
+
+#endif
+     // __MODULE_PROGRAM__

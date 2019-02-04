@@ -1,0 +1,42 @@
+#ifndef __MODULE_INSTRUCTIONS_ARITHMETIC__
+#define __MODULE_INSTRUCTIONS_ARITHMETIC__
+
+////////////////////////////////////////
+class add: public instruction
+ {
+  public:
+
+      constexpr static instruction_opcode opcode{instruction_opcode::add};
+      void operator()(processor * cpu) const override {cpu->registers[r1]+=cpu->registers[r2]; }
+
+  add(int r1_,int r2_, int) : instruction(r1_,r2_,0) {};
+  ~add() override=default;
+ };
+
+////////////////////////////////////////
+class sub: public instruction
+ {
+  public:
+
+      constexpr static instruction_opcode opcode{instruction_opcode::sub};
+      void operator()(processor * cpu) const override { cpu->registers[r1]-=cpu->registers[r2]; }
+
+  sub(int r1_,int r2_, int) : instruction(r1_,r2_,0) {};
+  ~sub() override=default;
+ };
+
+////////////////////////////////////////
+class mul: public instruction
+ {
+  public:
+
+      constexpr static instruction_opcode opcode{instruction_opcode::mul};
+      void operator()(processor * cpu) const override { cpu->registers[r1]*=cpu->registers[r2]; }
+
+  mul(int r1_,int r2_, int) : instruction(r1_,r2_,0) {};
+  ~mul() override=default;
+ };
+
+
+#endif
+     // __MODULE_INSTRUCTIONS_ARITHMETIC__
