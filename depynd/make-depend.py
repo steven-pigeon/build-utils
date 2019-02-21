@@ -101,7 +101,7 @@ def make_dependencies( sources, include_paths, seen ):
 
     for s in sources:
         try:
-            includes=find_includes(s,include_paths,seen);
+            includes=find_includes(s,include_paths,set())
 
             print(os.path.splitext(s)[0]+".o:",s,end=" ")
             print(" ".join([str(x) for x in includes if x is not None]))
@@ -130,12 +130,9 @@ def main():
 
     if len(sys.argv)==3:
 
-        # hold files already seen
-        seen=set()
-
         include_paths=make_list_from_arguments(sys.argv[1],remove="-I",ends='/');
         sources=make_list_from_arguments(sys.argv[2]);
-        make_dependencies(sources,include_paths,seen);
+        make_dependencies(sources,include_paths);
 
         #print(seen)
         sys.exit(0) # return error code (success)
