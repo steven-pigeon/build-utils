@@ -97,7 +97,7 @@ def find_includes( filename, include_paths, seen ):
 
 ########################################
 #
-def make_dependencies( sources, include_paths, seen ):
+def make_dependencies( sources, include_paths, seen=[] ):
 
     for s in sources:
         try:
