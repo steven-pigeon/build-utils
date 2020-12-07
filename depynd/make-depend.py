@@ -40,7 +40,7 @@ def find_file( filename, include_paths ):
         is_absolute = strip_name[0]=='/'
 
         if not is_absolute:
-        
+
             for test_path in include_paths:
                 test_name=os.path.normpath(test_path+strip_name)
                 if (os.path.exists(test_name)):
@@ -55,7 +55,7 @@ def find_file( filename, include_paths ):
 
         if is_local or is_absolute:
             print("warning: "+strip_name+" not found",file=sys.stderr)
-            
+
     else:
         pass # not a project file?
 
@@ -97,15 +97,16 @@ def find_includes( filename, include_paths, seen ):
 
 ########################################
 #
-def make_dependencies( sources, include_paths, seen=[] ):
+def make_dependencies( sources, include_paths, seen ):
 
     for s in sources:
         try:
-            includes=find_includes(s,include_paths,set())
+            includes=find_includes(s,include_paths,seen);
 
             print(os.path.splitext(s)[0]+".o:",s,end=" ")
             print(" ".join([str(x) for x in includes if x is not None]))
             print()
+            seen=set() # unset seen
 
         except Exception as e:
              print(e,"file not found: "+s,file=sys.stderr)
@@ -130,9 +131,12 @@ def main():
 
     if len(sys.argv)==3:
 
+        # hold files already seen
+        seen=set()
+
         include_paths=make_list_from_arguments(sys.argv[1],remove="-I",ends='/');
         sources=make_list_from_arguments(sys.argv[2]);
-        make_dependencies(sources,include_paths);
+        make_dependencies(sources,include_paths,seen);
 
         #print(seen)
         sys.exit(0) # return error code (success)
