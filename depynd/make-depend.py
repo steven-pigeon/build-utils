@@ -40,7 +40,7 @@ def find_file( filename, include_paths ):
         is_absolute = strip_name[0]=='/'
 
         if not is_absolute:
-
+        
             for test_path in include_paths:
                 test_name=os.path.normpath(test_path+strip_name)
                 if (os.path.exists(test_name)):
@@ -55,7 +55,7 @@ def find_file( filename, include_paths ):
 
         if is_local or is_absolute:
             print("warning: "+strip_name+" not found",file=sys.stderr)
-
+            
     else:
         pass # not a project file?
 
@@ -73,15 +73,16 @@ def find_includes( filename, include_paths, seen ):
     except:
         raise
     else:
-        includes=[]
+        includes=set() # of strings
         for line in input:
             if re.match("^\ *#\ *include",line):
                 # extract filename with < > or " ", or none?
                 filename=re.search(include_regex,line)
                 if filename!=None:
-                    if filename[2] not in seen:
-                        includes+=[ find_file(filename[0], include_paths) ]
-                        seen.add(filename[2])
+                    t=find_file(filename[0], include_paths)
+                    if t!=None:
+                        if t not in includes:
+                            includes.add(t)
 
         # project includes may have project includes,
         # so let's search them recursively
@@ -90,8 +91,7 @@ def find_includes( filename, include_paths, seen ):
              if include is not None:
                  found=find_file(include,include_paths);
                  if found is not None:
-                     seen.add(found)
-                     all_includes+=find_includes(found,include_paths,seen)
+                     all_includes=set.union(all_includes,find_includes(found,include_paths,seen))
 
         return all_includes
 
@@ -106,7 +106,6 @@ def make_dependencies( sources, include_paths, seen ):
             print(os.path.splitext(s)[0]+".o:",s,end=" ")
             print(" ".join([str(x) for x in includes if x is not None]))
             print()
-            seen=set() # unset seen
 
         except Exception as e:
              print(e,"file not found: "+s,file=sys.stderr)
@@ -145,5 +144,5 @@ def main():
 
 
 # linking to explicit main
-#if __name__ == "__main__":
-main()
+if __name__ == "__main__":
+    main()
