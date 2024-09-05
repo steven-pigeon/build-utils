@@ -75,7 +75,7 @@ def find_includes( filename, include_paths, seen ):
     else:
         includes=set() # of strings
         for line in input:
-            if re.match("^\ *#\ *include",line):
+            if re.match(r"^\ *#\ *include",line):
                 # extract filename with < > or " ", or none?
                 filename=re.search(include_regex,line)
                 if filename!=None:
